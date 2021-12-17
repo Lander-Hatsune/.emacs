@@ -27,8 +27,7 @@ Version 2019-11-04 2021-02-16"
 
 
 ;; basic face
-(custom-set-variables
- '(default-frame-alist '((undecorated . t))))
+(setq ns-auto-hide-menu-bar t)
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
@@ -169,3 +168,11 @@ charset
 
 (provide '.emacs)
 ;;; .emacs ends here
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-agenda-files '("~/Repos/life-notebook/2021/2021-3A-agenda.org")))
+
