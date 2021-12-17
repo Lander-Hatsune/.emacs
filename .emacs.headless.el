@@ -2,17 +2,12 @@
 
 
 ;; basic face
+(menu-bar-mode 0)
 (global-linum-mode 1)
 
 ;; English Font
 (set-face-attribute
 'default nil :font "Ubuntu Mono 16")
-
-;; Chinese Font
-(dolist (charset '(kana han symbol cjk-misc bopomofo))
-(set-fontset-font (frame-parameter nil 'font)
-charset
-(font-spec :family "Microsoft YaHei")))
 
 ;; space indent
 (setq tab-width 4)
@@ -46,15 +41,10 @@ charset
   :ensure t
   :init (global-flycheck-mode))
 
-(require 'org)
-(setq org-startup-indented t)
-(global-set-key "\C-ca" 'org-agenda)
-(require 'org-tempo)
-(setq org-log-done t) ;; close timestamp
-(setq org-src-fontify-natively t) ;; code block highlight
-(setq org-todo-keywords
-      '((sequence "TODO(t)" "DOING(i@/!)" "|"
-                  "DONE(d!)" "PASS(p@/!)" "CANCELLED(c@/!)")))
+(use-package org
+  :ensure t
+  :config
+  (setq org-startup-indented t))
 
 (use-package markdown-mode
   :ensure t
