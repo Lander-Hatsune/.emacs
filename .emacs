@@ -27,7 +27,7 @@ Version 2019-11-04 2021-02-16"
 
 
 ;; basic face
-(setq ns-auto-hide-menu-bar t)
+(setq default-frame-alist '((undecorated . t)))
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
