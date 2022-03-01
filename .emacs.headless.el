@@ -116,8 +116,5 @@
   :ensure t
   :config (global-company-mode))
 
-(use-package typescript-mode
-  :ensure t)
-
 (provide '.emacs)
 ;;; .emacs ends here
