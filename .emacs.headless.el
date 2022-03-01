@@ -1,5 +1,7 @@
 ;;; ----- basics -----
 
+;; C-h as backspace
+(global-set-key (kbd "C-h") 'delete-backward-char)
 
 ;; basic face
 (global-linum-mode 1)

@@ -1,5 +1,6 @@
-;;; ----- code -----
+;;; ----- basics -----
 
+;; Open
 (defun open-in-external-app (&optional @fname)
   "Open the current file or dired marked files in external app.
 When called in Emacs Lisp, if @fname is given, open that.
@@ -22,9 +23,8 @@ Version 2019-11-04 2021-02-16"
                           (start-process "" nil "xdg-open" $fpath))) $file-list))))
 (global-set-key (kbd "C-c C-o") 'open-in-external-app)
 
-
-;;; ----- basics -----
-
+;; C-h as backspace
+(global-set-key (kbd "C-h") 'delete-backward-char)
 
 ;; basic face
 (setq default-frame-alist '((undecorated . t)))
@@ -168,11 +168,3 @@ charset
 
 (provide '.emacs)
 ;;; .emacs ends here
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-agenda-files '("~/Repos/life-notebook/2021/2021-3A-agenda.org")))
-
