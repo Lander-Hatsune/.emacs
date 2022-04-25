@@ -23,8 +23,9 @@ Version 2019-11-04 2021-02-16"
                           (start-process "" nil "xdg-open" $fpath))) $file-list))))
 (global-set-key (kbd "C-c C-o") 'open-in-external-app)
 
-;; C-h as backspace
+;; C-h M-h as backward C-d M-d
 (global-set-key (kbd "C-h") 'delete-backward-char)
+(global-set-key (kbd "M-h") 'backward-kill-word)
 
 ;; basic face
 (setq default-frame-alist '((undecorated . t)))
@@ -42,10 +43,6 @@ Version 2019-11-04 2021-02-16"
 'default nil :font "Ubuntu Mono 16")
 
 ;; Chinese Font
-(dolist (charset '(kana han symbol cjk-misc bopomofo))
-(set-fontset-font (frame-parameter nil 'font)
-charset
-(font-spec :family "Microsoft YaHei")))
 
 ;; space indent
 (setq tab-width 4)
@@ -64,8 +61,6 @@ charset
              '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
-
-(when (version< emacs-version "27.0") (package-initialize))
 
 (require 'use-package) ;; use-package
 
@@ -117,14 +112,6 @@ charset
 (use-package editorconfig
   :ensure t)
 
-
-(use-package cmake-mode
-  :ensure t
-  :config
-  (setq load-path (cons
-                   (expand-file-name "/dir/with/cmake-mode")
-                   load-path)))
-
 (use-package ace-window
   :ensure t
   :config
@@ -140,22 +127,19 @@ charset
   (global-set-key (kbd "C-x t") 'trashed)
   (setq delete-by-moving-to-trash t))
 
-(use-package lsp-mode
-  :ensure t
-  :init
-  (setq lsp-keymap-prefix "C-c l")
-  :config
-  (setq lsp-clients-deno-enable-lint nil)
-  ; :hook
-  ; (java-mode . lsp)
-  :commands lsp)
-;; optionally
-(use-package lsp-ui
-  :ensure t
-  :commands lsp-ui-mode)
+(use-package tramp)
+
 (use-package company
   :ensure t
-  :config (global-company-mode))
+  :config
+  (global-company-mode))
+
+(use-package matlab-mode
+  :ensure t
+  :mode
+  (("\.m\'" . matlab-mode))
+  :config
+  (matlab-mode-common-setup))
 
 (use-package pdf-tools
   :ensure t
