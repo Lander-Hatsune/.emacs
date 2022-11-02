@@ -1,5 +1,8 @@
 ;;; ----- basics -----
 
+;; y-or-n-p
+(defalias 'yes-or-no-p 'y-or-n-p)
+
 ;; Open
 (defun open-in-external-app (&optional @fname)
   "Open the current file or dired marked files in external app.
@@ -27,6 +30,9 @@ Version 2019-11-04 2021-02-16"
 (global-set-key (kbd "C-h") 'delete-backward-char)
 (global-set-key (kbd "M-h") 'backward-kill-word)
 
+;; unbind C-\
+(global-unset-key "\C-\\")
+
 ;; basic face
 (setq default-frame-alist '((undecorated . t)))
 (tool-bar-mode 0)
@@ -38,11 +44,11 @@ Version 2019-11-04 2021-02-16"
                                (lambda () (linum-mode 0))
                                :append :local)))
 
-;; English Font
-(set-face-attribute
-'default nil :font "Ubuntu Mono 16")
+(set-face-attribute 'default nil :height 140)
 
-;; Chinese Font
+;; smooth scrolling
+(setq scroll-margin 2
+      scroll-step 1)
 
 ;; space indent
 (setq tab-width 4)
@@ -70,6 +76,13 @@ Version 2019-11-04 2021-02-16"
 ;; leuven/dark, peacock, dracula, monokai, zenburn,
 ;; sanityinc-tomorrow-eighties, nord
 
+;; make emacsclients use theme
+(if (daemonp)
+    (add-hook 'after-make-frame-functions
+	      (lambda (frame)
+		(with-selected-frame frame (load-theme 'nord t)))))
+
+
 (use-package flycheck
   :ensure t
   :init (global-flycheck-mode))
@@ -82,7 +95,7 @@ Version 2019-11-04 2021-02-16"
 (setq org-src-fontify-natively t) ;; code block highlight
 (setq org-todo-keywords
       '((sequence "TODO(t)" "DOING(i@/!)" "|"
-                  "DONE(d!)" "PASS(p@/!)" "CANCELLED(c@/!)")))
+                  "DONE(d)" "MISSED(m@)" "CANCELLED(c@)")))
 
 (use-package markdown-mode
   :ensure t
@@ -103,11 +116,11 @@ Version 2019-11-04 2021-02-16"
 (use-package ido
   :init
   (setq ido-enable-flex-matching t)
-  (setq ido-everywhere t)
   (setq ido-ignore-extensions t)
   (setq ido-auto-merge-delay-time 30)
   :config
-  (ido-mode t))
+  (ido-mode t)
+  (ido-everywhere t))
 
 (use-package editorconfig
   :ensure t)
@@ -152,3 +165,24 @@ Version 2019-11-04 2021-02-16"
 
 (provide '.emacs)
 ;;; .emacs ends here
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("78e6be576f4a526d212d5f9a8798e5706990216e9be10174e3f3b015b8662e27" "a44bca3ed952cb0fd2d73ff3684bda48304565d3eb9e8b789c6cca5c1d9254d1" default))
+ '(org-agenda-files
+   '("~/Repos/life-notebook/2022/2022-4A-autumn-agenda.org" "/home/landerx/Repos/life-notebook/2022/2022-3D-summer-agenda.org" "/home/landerx/Repos/life-notebook/2022/2022-3C-spring-agenda.org" "/home/landerx/Repos/life-notebook/2022/2022-3B-winter-agenda.org"))
+ '(package-selected-packages
+   '(cuda-mode web-mode use-package typescript-mode trashed rust-mode riscv-mode pdf-tools nord-theme monokai-theme matlab-mode magit lsp-ui lsp-java leuven-theme flycheck ein editorconfig dash-functional company color-theme-sanityinc-tomorrow cmake-mode auto-package-update arduino-mode))
+ '(warning-suppress-log-types '((ein))))
+
+
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
