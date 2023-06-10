@@ -71,7 +71,6 @@ Version 2019-11-04 2021-02-16"
 (require 'use-package) ;; use-package
 
 (use-package nord-theme
-  :ensure t
   :config (load-theme 'nord t))
 ;; leuven/dark, peacock, dracula, monokai, zenburn,
 ;; sanityinc-tomorrow-eighties, nord
@@ -81,6 +80,12 @@ Version 2019-11-04 2021-02-16"
     (add-hook 'after-make-frame-functions
 	      (lambda (frame)
 		(with-selected-frame frame (load-theme 'nord t)))))
+
+
+;; use default dark theme
+;; (set-foreground-color "white") ; light
+;;                                ; on
+;; (set-background-color "black") ; dark
 
 
 (use-package flycheck
@@ -98,7 +103,6 @@ Version 2019-11-04 2021-02-16"
                   "DONE(d)" "MISSED(m@)" "CANCELLED(c@)")))
 
 (use-package markdown-mode
-  :ensure t
   :commands (markdown-mode gfm-mode)
   :mode (("README\.md\'" . gfm-mode)
          ("\.md\'" . markdown-mode)
@@ -113,17 +117,21 @@ Version 2019-11-04 2021-02-16"
 (use-package ein
   :ensure t)
 
-(use-package ido
+(use-package counsel
+  :ensure t
   :init
-  (setq ido-enable-flex-matching t)
-  (setq ido-ignore-extensions t)
-  (setq ido-auto-merge-delay-time 30)
+  (ivy-mode 1)
+  (counsel-mode 1)
   :config
-  (ido-mode t)
-  (ido-everywhere t))
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "(%d/%d) ")
+  (global-set-key (kbd "C-s") 'swiper-isearch)
+  (global-set-key (kbd "C-x b") 'ivy-switch-buffer)
+  (global-set-key (kbd "C-c v") 'ivy-push-view)
+  (global-set-key (kbd "C-c V") 'ivy-pop-view))
 
-(use-package editorconfig
-  :ensure t)
+;; (use-package ivy-hydra
+;;   :ensure t)
 
 (use-package ace-window
   :ensure t
@@ -147,42 +155,11 @@ Version 2019-11-04 2021-02-16"
   :config
   (global-company-mode))
 
-(use-package matlab-mode
-  :ensure t
-  :mode
-  (("\.m\'" . matlab-mode))
-  :config
-  (matlab-mode-common-setup))
-
 (use-package pdf-tools
   :ensure t
   :config
   (pdf-tools-install)
   (setq pdf-view-image-relief 0))
 
-(use-package typescript-mode
-  :ensure t)
-
 (provide '.emacs)
 ;;; .emacs ends here
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("78e6be576f4a526d212d5f9a8798e5706990216e9be10174e3f3b015b8662e27" "a44bca3ed952cb0fd2d73ff3684bda48304565d3eb9e8b789c6cca5c1d9254d1" default))
- '(org-agenda-files
-   '("~/Repos/life-notebook/2022/2022-4A-autumn-agenda.org" "/home/landerx/Repos/life-notebook/2022/2022-3D-summer-agenda.org" "/home/landerx/Repos/life-notebook/2022/2022-3C-spring-agenda.org" "/home/landerx/Repos/life-notebook/2022/2022-3B-winter-agenda.org"))
- '(package-selected-packages
-   '(cuda-mode web-mode use-package typescript-mode trashed rust-mode riscv-mode pdf-tools nord-theme monokai-theme matlab-mode magit lsp-ui lsp-java leuven-theme flycheck ein editorconfig dash-functional company color-theme-sanityinc-tomorrow cmake-mode auto-package-update arduino-mode))
- '(warning-suppress-log-types '((ein))))
-
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
