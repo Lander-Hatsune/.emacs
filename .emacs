@@ -31,14 +31,14 @@ Version 2019-11-04 2021-02-16"
 (global-set-key (kbd "M-h") 'backward-kill-word)
 
 ;; unbind C-\
-(global-unset-key "\C-\\")
+(global-unset-key (kbd "C-\\"))
 
 ;; basic face
 (setq default-frame-alist '((undecorated . t)))
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
-(global-linum-mode 1)
+(global-display-line-numbers-mode)
 (add-hook 'pdf-view-mode-hook
           (lambda () (add-hook 'after-change-major-mode-hook
                                (lambda () (linum-mode 0))
@@ -125,13 +125,34 @@ Version 2019-11-04 2021-02-16"
   :config
   (setq ivy-use-virtual-buffers t)
   (setq ivy-count-format "(%d/%d) ")
-  (global-set-key (kbd "C-s") 'swiper-isearch)
-  (global-set-key (kbd "C-x b") 'ivy-switch-buffer)
-  (global-set-key (kbd "C-c v") 'ivy-push-view)
-  (global-set-key (kbd "C-c V") 'ivy-pop-view))
+  (setq ivy-height 6)
+  :bind
+  (("C-s" . swiper-isearch)
+   ("C-x b" . ivy-switch-buffer)
+   ("C-c v" . ivy-push-view)
+   ("C-c V" . ivy-pop-view)
+   ("C-<return>" . ivy-immediate-done)))
 
 ;; (use-package ivy-hydra
 ;;   :ensure t)
+
+(use-package typescript-mode)
+
+(use-package lsp-mode
+  :init
+  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  (setq lsp-keymap-prefix "C-c l")
+  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+         (typescript-mode . lsp-deferred)
+         ;; if you want which-key integration
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands (lsp lsp-deferred))
+
+;; optionally
+(use-package lsp-ui :commands lsp-ui-mode)
+;; if you are ivy user
+(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+(use-package lsp-treemacs :commands lsp-treemacs-errors-list)
 
 (use-package ace-window
   :ensure t
